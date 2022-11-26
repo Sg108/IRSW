@@ -1,17 +1,18 @@
 import React, {useState,useEffect} from 'react'
 import words from '../files/dictionary_compact.json'
-
+import EditDistanceOptimised from '../utils/EditDistanceOptimised'
 const SearchBar = () => {
 
  const [searchInput, setSearchInput] = useState("");
  const [list, setList] = useState([...Object.keys(words)]);
  const [press,setPress]=useState(false)
  const [display, setDisplay] = useState([]);
- let w=[]
- for(let i =0 ;i<10000;i++)
- {
-     w.push(list[i])
- }
+
+//  let w=[]
+//  for(let i =0 ;i<10000;i++)
+//  {
+//      w.push(list[i])
+//  }
 
   useEffect(() => {
     
@@ -20,9 +21,22 @@ const SearchBar = () => {
     console.log(list)
     if(searchInput.length>0)
     {
-    let d=w.filter((word) => {
-        return word.includes(searchInput);
+        let d=[]
+        list.forEach((word)=>{
+            d.push([word,EditDistanceOptimised(searchInput,word)])
+        })
+    // let d=list.filter((word) => {
+    //     return word.includes(searchInput);
+    // }).slice(0,5)
+    // d=d.sort(function (a, b) {
+    //     return a.value<b.value;
+    // });
+    d=d.sort(function(a,b){
+       
+        return a[1]-b[1]
     })
+    d=d.slice(0,5)
+    console.log(d)
     setDisplay(d)
 }
    else {
@@ -67,7 +81,7 @@ return <div>
 {display.map((x,i) => {
 
 
-   return <div>{display[i]}</div>
+   return <div>{x[0]}</div>
    
 
 
