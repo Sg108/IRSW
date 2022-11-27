@@ -29,14 +29,14 @@ neighbors_of["m"] = ["j", "k", "n"]
 
 // console.log(neighbors_of)
 
-console.log(Object.keys(neighbors_of))
+// console.log(Object.keys(neighbors_of))
 let keys = Object.keys(neighbors_of).sort()
 // console.log(keys)
 let dists = {}
 for (let key in keys) {
     dists[keys[key]] = {}
 }
-console.log(dists)
+// console.log(dists)
 
 function distance(start, end) {
     // console.log(start, end)
@@ -67,29 +67,32 @@ function distance(start, end) {
     return -1
 }
 
-let longest_dist = 0
-let avg_dist = 0
-// console.log(distance("r", "l"))
-for (let i = 0; i < keys.length; i++) {
-    for (let j = 0; j < keys.length; j++) {
-        let dist = distance(keys[i], keys[j])
-        console.log(keys[i], keys[j], dist)
-        dists[keys[i]][keys[j]] = (2 * dist) / 9.0
-        avg_dist += dists[keys[i]][keys[j]]
-        if (dist > longest_dist) {
-            longest_dist = dist
+function allDist() {
+    let longest_dist = 0
+    let avg_dist = 0
+    // console.log(distance("r", "l"))
+    for (let i = 0; i < keys.length; i++) {
+        for (let j = 0; j < keys.length; j++) {
+            let dist = distance(keys[i], keys[j])
+            // console.log(keys[i], keys[j], dist)
+            dists[keys[i]][keys[j]] = (2 * dist) / 9.0
+            avg_dist += dists[keys[i]][keys[j]]
+            if (dist > longest_dist) {
+                longest_dist = dist
+            }
         }
     }
-}
-let key_dist = longest_dist
-avg_dist /= keys.length ** 2 + 0.0
-console.log("average distance : ", avg_dist)
-let avg_dist2 = 0
-for (let i = 0; i < keys.length; i++) {
-    for (let j = 0; j < keys.length; j++) {
-        dists[keys[i]][keys[j]] /= avg_dist
-        avg_dist2 += dists[keys[i]][keys[j]]
+    let key_dist = longest_dist
+    avg_dist /= keys.length ** 2 + 0.0
+    // console.log("average distance : ", avg_dist)
+    let avg_dist2 = 0
+    for (let i = 0; i < keys.length; i++) {
+        for (let j = 0; j < keys.length; j++) {
+            dists[keys[i]][keys[j]] /= avg_dist
+            avg_dist2 += dists[keys[i]][keys[j]]
+        }
     }
+    return dists
 }
 
-export default dists
+export default allDist

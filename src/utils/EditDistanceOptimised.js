@@ -1,5 +1,3 @@
-import keyDist from "../utils/KeyboardOptimisedEditDistance"
-
 const min = (arr) => {
     let mine = 1e7
     for (let i of arr) {
@@ -25,10 +23,7 @@ export const editDistanceOptimised = (str1, str2) => {
     return prev[n2]
 }
 
-export const editDistanceOptimum = (str1, str2) => {
-    // console.log(str1, str2)
-    str1 = str1.toLowerCase()
-    str2 = str2.toLowerCase()
+export const editDistanceEnhanced = (str1, str2, keyDist) => {
     let n = str1.length
     let m = str2.length
     let dp = new Array(m + 1).fill(0)
@@ -40,17 +35,40 @@ export const editDistanceOptimum = (str1, str2) => {
         for (let j = 1; j <= m; j++) {
             temp = dp[j]
             if (str1[i - 1] == str2[j - 1]) dp[j] = dist
-            else
+            else if (i == 1) {
                 dp[j] =
                     min([
                         dist + keyDist[str1[i - 1]][str2[j - 1]],
-                        dp[j] +
-                            (i == 1 ? 1.0 : keyDist[str1[i - 1]][str1[i - 2]]),
-                        dp[j - 1] + 1.0,
+                        dp[j] + 1,
+                        dp[j - 1] + 1,
+                    ]) + 0.0
+            } else
+                dp[j] =
+                    min([
+                        dist + keyDist[str1[i - 1]][str2[j - 1]],
+                        dp[j] + keyDist[str1[i - 1]][str1[i - 2]],
+                        dp[j - 1] + 1,
                     ]) + 0.0
             dist = temp
         }
-        // console.log(dp)
+    }
+    return dp[m]
+}
+
+export const editDistanceOptimum = (str1, str2) => {
+    let n = str1.length
+    let m = str2.length
+    let dp = new Array(m + 1).fill(0)
+    for (let i = 1; i <= m; i++) dp[i] = i
+    for (let i = 1; i <= n; i++) {
+        let dist = i - 1
+        dp[0] = i
+        for (let j = 1; j <= m; j++) {
+            let temp = dp[j]
+            if (str1[i - 1] == str2[j - 1]) dp[j] = dist
+            else dp[j] = 1 + min([dist, dp[j], dp[j - 1]])
+            dist = temp
+        }
     }
     return dp[m]
 }
