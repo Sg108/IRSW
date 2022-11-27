@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
-import words from "../files/dictionary_compact.json"
+
+import { useSelector, useDispatch } from "react-redux"
+
 // import wordsFull from "../files/dictionary.json"
 import all from "../utils/KeyboardOptimisedEditDistance"
 import {
@@ -9,12 +11,24 @@ import {
 import editDistance from "../utils/EditDistance"
 const SearchBar = () => {
     const [searchInput, setSearchInput] = useState("")
-    const [list, setList] = useState([...Object.keys(words)])
+    //const [list, setList] = useState([...Object.keys(words)])
     // const [fullList, setFullList] = useState([...Object.keys(wordsFull)])
+    const list = useSelector((state) => state.dictionary.list)
+    const dict = useSelector((state) => state.dictionary.dict)
+    //const sound = useSelector((state)=>state.dictionary.dict)
     const [press, setPress] = useState(false)
     const [display, setDisplay] = useState([])
 
+    //  let w=[]
+    //  for(let i =0 ;i<10000;i++)
+    //  {
+    //      w.push(list[i])
+    //  }
+    //console.log(dict)
     useEffect(() => {
+        // console.log(list)
+        // console.log(fullList)
+
         if (searchInput.length > 0) {
             let d = []
 
@@ -42,13 +56,15 @@ const SearchBar = () => {
             list.forEach((word) => {
                 d.push([word, editDistanceOptimum(searchInput, word)])
             })
+            editDistanceOptimum("apole", "apple")
+            editDistanceOptimum("piyush", "anopheles")
             endTime = performance.now()
             console.log(
                 "time elapsed (super optimised): ",
                 endTime - startTime,
                 " ms"
             )
-
+            // console.log(d)
             d = d.sort(function (a, b) {
                 return a[1] - b[1]
             })
@@ -58,8 +74,7 @@ const SearchBar = () => {
         } else {
             setDisplay([])
         }
-        // console.log(display)
-    }, [press])
+    }, [press, list])
 
     const handleChange = (e) => {
         e.preventDefault()

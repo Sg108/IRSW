@@ -74,7 +74,7 @@ for (let i = 0; i < keys.length; i++) {
     for (let j = 0; j < keys.length; j++) {
         let dist = distance(keys[i], keys[j])
         console.log(keys[i], keys[j], dist)
-        dists[keys[i]][keys[j]] = 2 - (2 * dist) / 9.0
+        dists[keys[i]][keys[j]] = (2 * dist) / 9.0
         avg_dist += dists[keys[i]][keys[j]]
         if (dist > longest_dist) {
             longest_dist = dist
@@ -82,7 +82,7 @@ for (let i = 0; i < keys.length; i++) {
     }
 }
 let key_dist = longest_dist
-avg_dist /= keys.length ** 2
+avg_dist /= keys.length ** 2 + 0.0
 console.log("average distance : ", avg_dist)
 let avg_dist2 = 0
 for (let i = 0; i < keys.length; i++) {
@@ -91,4 +91,5 @@ for (let i = 0; i < keys.length; i++) {
         avg_dist2 += dists[keys[i]][keys[j]]
     }
 }
-console.log(dists)
+
+export default dists
