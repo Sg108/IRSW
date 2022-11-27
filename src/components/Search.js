@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import words from "../files/dictionary_compact.json"
 // import wordsFull from "../files/dictionary.json"
+import all from "../utils/KeyboardOptimisedEditDistance"
 import {
     editDistanceOptimised,
     editDistanceOptimum,
@@ -13,15 +14,7 @@ const SearchBar = () => {
     const [press, setPress] = useState(false)
     const [display, setDisplay] = useState([])
 
-    //  let w=[]
-    //  for(let i =0 ;i<10000;i++)
-    //  {
-    //      w.push(list[i])
-    //  }
-
     useEffect(() => {
-        // console.log(list)
-        // console.log(fullList)
         if (searchInput.length > 0) {
             let d = []
 
@@ -47,7 +40,7 @@ const SearchBar = () => {
             )
             startTime = performance.now()
             list.forEach((word) => {
-                editDistanceOptimum(searchInput, word)
+                d.push([word, editDistanceOptimum(searchInput, word)])
             })
             endTime = performance.now()
             console.log(
@@ -65,7 +58,7 @@ const SearchBar = () => {
         } else {
             setDisplay([])
         }
-        console.log(display)
+        // console.log(display)
     }, [press])
 
     const handleChange = (e) => {
