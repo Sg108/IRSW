@@ -93,9 +93,11 @@ const Home = () => {
       });
       startTime = performance.now();
       let code = Soundex(searchInput);
-      dict[code].forEach((word) => {
-        d4.push([word, editDistanceOptimum(searchInput, word)]);
-      });
+      if (dict[code]) {
+        dict[code].forEach((word) => {
+          d4.push([word, editDistanceOptimum(searchInput, word)]);
+        });
+      }
       endTime = performance.now();
       d.push({
         name: 'Algo-4',
