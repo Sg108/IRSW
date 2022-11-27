@@ -5,6 +5,7 @@ import SearchBar from './components/Search';
 import words from './files/dictionary_compact.json'
 import { storeWords, soundexDict } from './components/actions'
 import { useDispatch,useSelector } from 'react-redux'
+import SoundexSearch from './components/SoundexSearch';
 function App() {
   const dispatch=useDispatch()
   const startTime=useRef(null)
@@ -31,6 +32,7 @@ function App() {
     <div className="App">
       
       <SearchBar/>
+      <SoundexSearch/>
     </div>
    
   );
