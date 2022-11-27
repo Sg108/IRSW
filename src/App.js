@@ -6,6 +6,7 @@ import { storeWords, soundexDict } from './components/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import SoundexSearch from './components/SoundexSearch';
 import Home from './components/Home/Home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 function App() {
   const dispatch = useDispatch();
   const startTime = useRef(null);
@@ -25,11 +26,12 @@ function App() {
     }
   }, [dict]);
   return (
-    <div className='App'>
-      <Home />
-      {/* <SearchBar />
-      <SoundexSearch /> */}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<SearchBar />} />
+        <Route path='/Soundex' element={<SoundexSearch />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
