@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
-import words from "../files/dictionary_compact.json"
+
+import { useSelector, useDispatch } from 'react-redux'
+
 // import wordsFull from "../files/dictionary.json"
 import {
     editDistanceOptimised,
@@ -8,8 +10,11 @@ import {
 import editDistance from "../utils/EditDistance"
 const SearchBar = () => {
     const [searchInput, setSearchInput] = useState("")
-    const [list, setList] = useState([...Object.keys(words)])
+    //const [list, setList] = useState([...Object.keys(words)])
     // const [fullList, setFullList] = useState([...Object.keys(wordsFull)])
+    const list = useSelector((state)=>state.dictionary.list)
+    const dict = useSelector((state)=>state.dictionary.dict)
+    //const sound = useSelector((state)=>state.dictionary.dict)
     const [press, setPress] = useState(false)
     const [display, setDisplay] = useState([])
 
@@ -18,10 +23,11 @@ const SearchBar = () => {
     //  {
     //      w.push(list[i])
     //  }
-
+    //console.log(dict)
     useEffect(() => {
         // console.log(list)
         // console.log(fullList)
+        
         if (searchInput.length > 0) {
             let d = []
 
@@ -47,7 +53,7 @@ const SearchBar = () => {
             )
             startTime = performance.now()
             list.forEach((word) => {
-                editDistanceOptimum(searchInput, word)
+                d.push([word, editDistanceOptimum(searchInput, word)])
             })
             endTime = performance.now()
             console.log(
@@ -65,8 +71,8 @@ const SearchBar = () => {
         } else {
             setDisplay([])
         }
-        console.log(display)
-    }, [press])
+        
+    }, [press,list])
 
     const handleChange = (e) => {
         e.preventDefault()
