@@ -28,6 +28,12 @@ const Home = () => {
 
   return (
     <>
+      <header className='heading'>
+        <h1>String Similarity Search</h1>
+        <h1>String Similarity Search</h1>
+        {/* <h4>using Soundex and Edit Distance Algorithm</h4>
+        <h4>using Soundex and Edit Distance Algorithm</h4> */}
+      </header>
       <div className='search-box' ref={searchBox}>
         <input type='text' placeholder='Type to search...' ref={searchInput} />
         <div className='search-btn' onClick={handleSearchBtn} ref={searchBtn}>

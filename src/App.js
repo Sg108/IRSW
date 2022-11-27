@@ -28,7 +28,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<SearchBar />} />
+        <Route path='/' element={<Home />} />
         <Route path='/Soundex' element={<SoundexSearch />} />
       </Routes>
     </BrowserRouter>
