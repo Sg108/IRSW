@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import './App.css';
+//import './App.css';
 import SearchBar from './components/Search';
 import words from './files/dictionary_compact.json';
 import { storeWords, soundexDict } from './components/actions';
@@ -28,7 +28,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<SearchBar />} />
+        <Route path='/' element={<Home />} />
         <Route path='/Soundex' element={<SoundexSearch />} />
       </Routes>
     </BrowserRouter>
